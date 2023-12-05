@@ -19,7 +19,7 @@ public class ClientController {
     //@Autowired
     private final ClientService clientService;
 
-    @PostMapping("/save")
+    @PostMapping("/")
     @Transactional
     public ResponseEntity<ClientShowData> saveClient(@RequestBody @Valid ClientSaveData clientSaveData){
         var client = this.clientService.saveClient(clientSaveData);

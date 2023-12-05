@@ -11,6 +11,8 @@ public interface OrderService {
     OrderShowData saveOrder(OrderSaveData OrderSaveData);
     OrderShowData findOrderById(Boolean active, Long id) throws EntityNotFoundException;
     OrderShowData findOrderByClientName(Boolean active, String clientName) throws EntityNotFoundException;
+    Page<OrderShowData> findOrderByDateAndActive(Boolean active, String date, Pageable paging) throws EntityNotFoundException;
+    Page<OrderShowData> findOrderBetweenDatesAndActive(Boolean active, String date1, String date2, Pageable paging) throws EntityNotFoundException;
     Page<OrderShowData> findAllOrdersByActive(Boolean active, Pageable paging);
     OrderShowData updateOrder(OrderUpdateData OrderUpdateData) throws EntityNotFoundException;
     boolean hideOrder(Long id) throws EntityNotFoundException;

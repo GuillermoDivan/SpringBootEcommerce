@@ -3,8 +3,6 @@ import ecommerce.api.entities.Order.Order;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 @Entity

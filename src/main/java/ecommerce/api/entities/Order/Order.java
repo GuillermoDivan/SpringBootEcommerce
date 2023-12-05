@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,23 +14,23 @@ import java.util.List;
 @Data
 @Table(name = "orders")
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime date;
+    private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
     @ManyToMany
     private List<Product> productList;
-    private boolean active = true;
+    private boolean active;
 
     public Order(OrderSaveData orderSaveData){
-        this.date = orderSaveData.date();
-        this.client = orderSaveData.client();
-        this.productList = orderSaveData.productList();
+        this.date = LocalDate.now();
+        this.active = true;
+        this.client = new Client();
+        this.client.setId(orderSaveData.clientId());
     }
 }

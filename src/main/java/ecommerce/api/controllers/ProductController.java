@@ -18,7 +18,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/save")
+    @PostMapping("/")
     @Transactional
     public ResponseEntity<ProductShowData> saveProduct(@RequestBody @Valid ProductSaveData productSaveData){
         var Product = this.productService.saveProduct(productSaveData);
