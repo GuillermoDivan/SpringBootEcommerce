@@ -25,7 +25,9 @@ public class UserController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<UserShowData> findByIdAndActive(@PathVariable Long id, boolean active) {
-        return ResponseEntity.ok(userService.findByIdAndActive(id, true));
+        var result = userService.findByIdAndActive(id, true);
+        if (result == null) { return ResponseEntity.badRequest().build(); }
+        else { return ResponseEntity.ok().body(result); }
     }
 
     @GetMapping("/username/{username}")

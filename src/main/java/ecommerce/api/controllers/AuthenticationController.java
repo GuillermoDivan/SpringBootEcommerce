@@ -1,5 +1,4 @@
 package ecommerce.api.controllers;
-
 import ecommerce.api.entities.User.UserSaveData;
 import ecommerce.api.services.Authentication.AuthenticationService;
 import ecommerce.api.security.JWTTokenData;
@@ -21,7 +20,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity authenticateUser(@RequestBody @Valid
+    public ResponseEntity<JWTTokenData> authenticateUser(@RequestBody @Valid
                                            UserSaveData userSaveData) {
         try {
             JWTTokenData JWT = authenticationService.authenticate(userSaveData);

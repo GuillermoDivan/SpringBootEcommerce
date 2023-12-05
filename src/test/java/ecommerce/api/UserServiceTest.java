@@ -1,4 +1,4 @@
-package com.ecommerce.api;
+package ecommerce.api;
 
 import ecommerce.api.entities.User.*;
 import ecommerce.api.repositories.UserRepository;
@@ -11,11 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-@AutoConfigureMockMvc
 @SpringBootTest
 class UserServiceTest {
 
@@ -55,19 +53,20 @@ public void shouldCreateUser() {
 	assertEquals("Test", createdUser.username());
 }
 
-/*
+
 @Test
 public void shouldFindById() {
+
 	User user = new User();
 	user.setId(1L);
 	user.setUsername("Test");
 
-when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+	when(userRepository.findByIdAndActive(anyLong(), anyBoolean())).thenReturn(Optional.of(user));
 
-UserDTO usuarioEncontrado = userService.findUserById(user.getId());
+	UserShowData userFound= userService.findByIdAndActive(user.getId(), true);
 
-assertEquals(usuarioEncontrado.getId(), 1L);
-assertEquals("Test", usuarioEncontrado.getUsername());
-}*/
+	assertEquals(userFound.id(), 1L);
+	assertEquals("Test", userFound.username());
+	}
 }
 
