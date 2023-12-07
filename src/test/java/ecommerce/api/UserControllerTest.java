@@ -35,7 +35,7 @@ public class UserControllerTest {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(userSaveData);
 
-        //Crea el dto que se devuelve (como JSON, en vista de insomnia).
+        //Crea el dto que se devuelve (como JSON, en vista de insomnia/postman).
         UserShowData userShowData = new UserShowData(1L, "test@test.com");
         String json2 = ow.writeValueAsString(userShowData);
 

@@ -1,11 +1,13 @@
 package ecommerce.api.controllers;
 import ecommerce.api.entities.User.*;
 import ecommerce.api.services.User.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -49,22 +51,31 @@ public class AdminController {
     @DeleteMapping("/reactivate/{id}")
     @Transactional
     public ResponseEntity<Boolean> reactivatePatient(@PathVariable Long id) {
-        boolean reactivated = userService.reactivateUser(id);
-        if (reactivated) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().build();
+        try {
+            boolean reactivated = userService.reactivateUser(id);
+            if (reactivated) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }
+        catch(EntityNotFoundException e){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @DeleteMapping("/id/{id}")
     @Transactional
     public ResponseEntity<Boolean> deleteUserFromDatabase(@PathVariable Long id) {
-        boolean deleted = userService.deleteUser(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.badRequest().build();
+        try {
+            boolean deleted = userService.deleteUser(id);
+            if (deleted) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

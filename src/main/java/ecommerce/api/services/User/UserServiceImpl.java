@@ -1,6 +1,7 @@
 package ecommerce.api.services.User;
 import ecommerce.api.entities.User.*;
 import ecommerce.api.repositories.UserRepository;
+import ecommerce.api.services.Authentication.AuthenticationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -8,12 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationService authenticationService;
 
     @Override
     public UserShowData saveUser(UserSaveData userSaveData) {
@@ -83,11 +87,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Boolean deleteUser(Long id) throws EntityNotFoundException {
+    public Boolean deleteUser(Long id) throws EntityNotFoundException  {
+        if (authenticationService.isAdmin(id)) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         this.userRepository.deleteById(id);
         return true;
+        }
+    return false;
     }
 
-}
+
+    }
+
+//AccessDeniedException

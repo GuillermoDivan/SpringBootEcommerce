@@ -30,9 +30,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return new JWTTokenData(JWTToken);
         }
 
-    public boolean isSelf(Long userId) {
+    public boolean isSelforAdmin(Long userId) {
         var loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return (loggedUser.getId() == userId);
+        return (loggedUser.getId() == userId || loggedUser.getRole() == Role.ADMIN);
     }
 
     public boolean isAdmin(Long userId) {

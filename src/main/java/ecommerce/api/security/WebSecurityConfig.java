@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import java.util.List;
 
@@ -68,3 +67,15 @@ import java.util.List;
     }
 
 }
+
+/*
+@Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        //No hizo faltar user ni password
+        http.authorizeHttpRequests((authz) -> authz.anyRequest().permitAll());
+              //  .httpBasic(Customizer.withDefaults())
+               // .csrf(Customizer.withDefaults())
+               // .cors(Customizer.withDefaults());
+        return http.build();
+    }*/
